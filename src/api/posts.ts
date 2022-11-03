@@ -1,7 +1,7 @@
-import axios from "axios";
+import { posts } from ".";
 
 export interface postsInfo {
-  id?: number;
+  id?: string;
   title?: string;
   content?: string;
   createdAt?: string | Date | number;
@@ -14,21 +14,24 @@ export const getPosts = (params: {
   _page: number;
   title_like: string;
 }) => {
-  return axios.get("http://localhost:5000/posts", { params });
+  return posts.get("/", { params });
 };
 
-export const getPostById = (id: number) => {
-  return axios.get(`http://localhost:5000/posts/${id}`);
+export const getPostById = (id: string) => {
+  return posts.get(id);
+  // return posts.get(`/${id}`)
 };
 
 export const createPosts = (data: object) => {
-  return axios.post("http://localhost:5000/posts", data);
+  return posts.post("", data);
 };
 
-export const updatePosts = (id: number, data: object) => {
-  return axios.put(`http://localhost:5000/posts/${id}`, data);
+export const updatePosts = (id: string, data: object) => {
+  return posts.put(id, data);
+  // return posts.put(`/${id}`, data)
 };
 
-export const deletePosts = (id: number) => {
-  return axios.delete(`http://localhost:5000/posts/${id}`);
+export const deletePosts = (id: string) => {
+  // return posts.delete(`/${id}`);
+  return posts.delete(id);
 };
