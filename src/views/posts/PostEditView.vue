@@ -39,7 +39,7 @@ import { ref, type Ref } from "vue";
 
 const router = useRouter();
 const route = useRoute();
-const id = parseInt(route.params.id as string);
+const id = route.params.id;
 
 const goDetailPage = () => {
   router.push({ name: "PostDetail", params: { id } });
@@ -56,7 +56,7 @@ const form: Ref<postsInfo> = ref({
   content: "",
 });
 const fetchPost = async () => {
-  const { data } = await getPostById(id);
+  const { data } = await getPostById(id as string);
   setPost(data);
 };
 const setPost = ({ title, content, createdAt }: postsInfo) => {
@@ -68,7 +68,7 @@ fetchPost();
 
 const edit = async () => {
   try {
-    await updatePosts(id, { ...form.value });
+    await updatePosts(id as string, { ...form.value });
     goDetailPage();
   } catch (error) {
     throw error;

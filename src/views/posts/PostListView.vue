@@ -66,7 +66,7 @@
     <hr class="my-5" />
 
     <AppCard>
-      <PostDetailView :id="1"></PostDetailView>
+      <PostDetailView id="1"></PostDetailView>
     </AppCard>
   </div>
 </template>
@@ -110,7 +110,7 @@ watch(params.value, fetchPosts, { immediate: true });
 // fetchPosts();
 
 const router = useRouter();
-const goPage = (postId: number | undefined): void => {
+const goPage = (postId: string | undefined): void => {
   router.push({
     name: "PostDetail",
     params: {
