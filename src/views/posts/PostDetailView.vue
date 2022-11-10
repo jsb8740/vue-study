@@ -40,7 +40,7 @@ const route = useRoute();
 // console.log(route.params);
 
 const props = defineProps<{
-  id: string;
+  id: string | number;
 }>();
 
 // console.log(typeof numberId);
