@@ -5,6 +5,8 @@
 
   <hr class="my-4" />
 
+  <button @click="person.say">dfdf</button>
+
   <AppGrid :items="items" #="{ item }">
     <AppCard>
       {{ item }}
@@ -13,9 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import AppCard from "@/components/AppCard.vue";
-import AppGrid from "@/components/AppGrid.vue";
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -25,6 +25,8 @@ const goHomePage = (): void => {
 };
 
 const items = ref(["사과", "딸기", "포도", "바나나"]);
+
+const person: any = inject("person");
 </script>
 
 <style scoped></style>

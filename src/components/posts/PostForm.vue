@@ -2,7 +2,9 @@
   <form>
     <div class="mb-3">
       <label for="title" class="form-label"> 제목 </label>
+      <!-- v-color="'yellow'" -->
       <input
+        v-focus
         :value="title"
         @input="updateTitle"
         type="text"
@@ -31,6 +33,12 @@ const props = defineProps<{
   title: string;
   content: string;
 }>();
+
+// const vFocus = {
+//   mounted: (el: HTMLLIElement) => {
+//     el.focus();
+//   },
+// };
 
 // const emit = defineEmits<{
 //   (event: "update", title: string): void;

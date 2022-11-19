@@ -7,9 +7,11 @@
 </template>
 
 <script setup lang="ts">
+import type { postsInfo } from "@/api/posts";
+
 defineProps({
   items: {
-    type: Array,
+    type: [Array<postsInfo>, Array<String>],
     required: true,
   },
   colClass: {

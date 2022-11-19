@@ -10,10 +10,11 @@
     <AppGrid :items="posts">
       <template v-slot="{ item }">
         <PostItem
-          :title="item.title"
-          :content="item.content"
-          :created-at="item.createdAt"
+          :title="item.title!"
+          :content="item.content!"
+          :created-at="item.createdAt!"
           @click="goPage(item.id)"
+          @modal="openModal(item)"
         ></PostItem>
       </template>
     </AppGrid>
@@ -24,8 +25,19 @@
     <AppPagination
       :current-page="params._page"
       :page-count="pageCount"
-      @page="(page) => (params._page = page)"
+      @page="(page: number) => (params._page = page)"
     />
+
+    <!-- 이 부분 v-model로 props 계속전달하는방식 다시 확인 -->
+    <!-- 자식컴포넌트에서 변경을 방지하기 위해서 computed를 사용했음 -->
+    <Teleport to="#modal">
+      <PostModal
+        v-model="show"
+        :title="modalTitle"
+        :content="modalContent"
+        :created-at="modalCreatedAt"
+      />
+    </Teleport>
 
     <template v-if="posts && posts.length > 0">
       <hr class="my-5" />
@@ -43,11 +55,9 @@ import { ref, watch, type Ref } from "vue";
 import { getPosts } from "@/api/posts";
 import type { postsInfo } from "@/api/posts";
 import { useRouter } from "vue-router";
-import AppCard from "@/components/AppCard.vue";
 import { computed } from "@vue/reactivity";
-import AppPagination from "@/components/AppPagination.vue";
-import AppGrid from "@/components/AppGrid.vue";
 import PostFilter from "@/components/posts/PostFilter.vue";
+import PostModal from "@/components/posts/PostModal.vue";
 
 const posts: Ref<Array<postsInfo>> = ref([]);
 
@@ -85,6 +95,21 @@ const goPage = (postId: string | undefined | number): void => {
       id: postId,
     },
   });
+};
+
+// modal
+const show = ref(false);
+const modalTitle = ref("");
+const modalContent = ref("");
+const modalCreatedAt = ref("");
+const openModal = ({ title, content, createdAt }: postsInfo) => {
+  show.value = true;
+  modalTitle.value = title!;
+  modalContent.value = content!;
+  modalCreatedAt.value = createdAt as string;
+};
+const closeModal = () => {
+  show.value = false;
 };
 </script>
 
